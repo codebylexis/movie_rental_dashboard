@@ -2,16 +2,16 @@
 
 REVENUE_BY_MONTH = """
 SELECT 
-    DATE_TRUNC('day', payment_date)::date AS date,
+    DATE(payment_date) AS date,
     ROUND(SUM(amount)::numeric, 2) AS revenue
 FROM payments
-GROUP BY date
-ORDER BY date;
+GROUP BY DATE(payment_date)
+ORDER BY DATE(payment_date);
 """
 
 TOP_CUSTOMERS = """
 SELECT 
-    c.first_name || ' ' || c.last_name AS customer_name,
+    CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
     ROUND(SUM(p.amount)::numeric, 2) AS total_spent
 FROM payments p
 JOIN customers c ON p.customer_id = c.customer_id
@@ -27,7 +27,7 @@ SELECT
 FROM rentals r
 JOIN films f ON r.film_id = f.film_id
 JOIN genres g ON f.genre_id = g.genre_id
-GROUP BY genre
+GROUP BY g.genre_name
 ORDER BY rentals DESC;
 """
 
@@ -40,5 +40,5 @@ SELECT COUNT(*) AS total_rentals FROM rentals;
 """
 
 TOTAL_CUSTOMERS = """
-SELECT COUNT(*) AS total_customers FROM customers WHERE active = TRUE;
+SELECT COUNT(*) AS total_customers FROM customers WHERE active = 1;
 """
