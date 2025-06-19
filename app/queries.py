@@ -2,8 +2,8 @@
 
 REVENUE_BY_MONTH = """
 SELECT 
-    DATE(payment_date) AS date,
-    ROUND(SUM(amount), 2) AS revenue
+    DATE_TRUNC('day', payment_date)::date AS date,
+    ROUND(SUM(amount)::numeric, 2) AS revenue
 FROM payments
 GROUP BY date
 ORDER BY date;
@@ -11,8 +11,8 @@ ORDER BY date;
 
 TOP_CUSTOMERS = """
 SELECT 
-    CONCAT(c.first_name, ' ', c.last_name) AS customer_name,
-    ROUND(SUM(p.amount), 2) AS total_spent
+    c.first_name || ' ' || c.last_name AS customer_name,
+    ROUND(SUM(p.amount)::numeric, 2) AS total_spent
 FROM payments p
 JOIN customers c ON p.customer_id = c.customer_id
 GROUP BY customer_name
@@ -32,7 +32,7 @@ ORDER BY rentals DESC;
 """
 
 TOTAL_REVENUE = """
-SELECT ROUND(SUM(amount), 2) AS total_revenue FROM payments;
+SELECT ROUND(SUM(amount)::numeric, 2) AS total_revenue FROM payments;
 """
 
 TOTAL_RENTALS = """
@@ -40,5 +40,5 @@ SELECT COUNT(*) AS total_rentals FROM rentals;
 """
 
 TOTAL_CUSTOMERS = """
-SELECT COUNT(*) AS total_customers FROM customers WHERE active = 1;
+SELECT COUNT(*) AS total_customers FROM customers WHERE active = TRUE;
 """
