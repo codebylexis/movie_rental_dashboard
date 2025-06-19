@@ -99,7 +99,7 @@ with tab3:
     cust_by_store = run_query("""
     SELECT store_id, COUNT(*) AS customer_count
     FROM customers
-    WHERE active = 1
+    WHERE active = TRUE
     GROUP BY store_id
     """)
     st.bar_chart(cust_by_store.set_index('store_id'))
@@ -143,7 +143,7 @@ with tab5:
 
     st.subheader("⏳ Average Rental Duration")
     avg_duration = run_query("""
-    SELECT AVG(return_date - rental_date) AS avg_days
+    SELECT ROUND(AVG(EXTRACT(EPOCH FROM return_date - rental_date) / 86400), 2) AS avg_days
     FROM rentals
     WHERE return_date IS NOT NULL
     """)['avg_days'].iloc[0]
