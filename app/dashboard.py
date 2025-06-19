@@ -141,10 +141,17 @@ with tab5:
 
     st.subheader("⏳ Average Rental Duration")
     avg_duration = run_query("""
-    SELECT ROUND(AVG(EXTRACT(EPOCH FROM return_date - rental_date) / 86400.0), 2) AS avg_days
-    FROM rentals
-    WHERE return_date IS NOT NULL;
-    """)['avg_days'].iloc[0]
+SELECT ROUND(
+    AVG(
+        EXTRACT(DAY FROM return_date - rental_date) +
+        EXTRACT(HOUR FROM return_date - rental_date)/24 +
+        EXTRACT(MINUTE FROM return_date - rental_date)/1440 +
+        EXTRACT(SECOND FROM return_date - rental_date)/86400
+    ), 2
+) AS avg_days
+FROM rentals
+WHERE return_date IS NOT NULL
+""")['avg_days'].iloc[0]
 
     st.metric("⏳ Avg Duration", f"{avg_duration:.2f} days")
 
