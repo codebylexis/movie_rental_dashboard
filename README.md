@@ -1,8 +1,8 @@
 # 🎬 Movie Rental Analytics Dashboard
 
-An interactive data analytics dashboard built using **Streamlit**, **MySQL**, and **Python** to visualize business performance for a fictional movie rental company with data from 2024.
+An interactive data analytics dashboard built using **Streamlit**, **MySQL**, and **Python** to visualize business performance for a fictional company, **ReelTime Rentals**, using 2024 data.
 
-> 💡 This project is ideal for showcasing full-stack data skills — from database design and data generation to query building, visualization, and interactive deployment.
+> 💡 Great for showcasing full-stack data skills — from database design and data generation to SQL querying, visualization, and interactive deployment.
 
 ---
 
@@ -14,44 +14,37 @@ An interactive data analytics dashboard built using **Streamlit**, **MySQL**, an
 - 🎬 Genre insights with dynamic top-N filtering
 - 📅 Rental heatmap by hour of day
 - ⏳ Average rental duration + daily revenue
-- 🔽 Download CSV exports
-- 🎛️ Store filter
+- 🔽 Downloadable CSV exports
+- 🎛️ Store-level filtering (e.g. ReelTime East vs. West)
 
 ---
 
 ## 🚀 Live Demo
 
-📌 **Live App:** [https://movie-rental-dashboard.streamlit.app](https://movie-rental-dashboard.streamlit.app)
-
-📁 **GitHub Repo:** [https://github.com/yourusername/movie-rental-dashboard](https://github.com/yourusername/movie-rental-dashboard)
-
----
-
-## 📸 Preview
-
-![Dashboard Screenshot](preview.png) <!-- Optional: Add preview.png to your repo -->
+📌 **App:** [https://movie-rental-dashboard.streamlit.app](https://movie-rental-dashboard.streamlit.app)  
+📁 **Code:** [https://github.com/codebylexis/movie_rental_dashboard](https://github.com/codebylexis/movie_rental_dashboard)
 
 ---
 
 ## 📦 Tech Stack
 
-- **Frontend/UI:** Streamlit
-- **Backend/DB:** MySQL 8+
-- **Data Source:** Synthetic data (generated using Faker)
-- **Python Libraries:** pandas, streamlit, mysql-connector-python, faker
+- **Frontend/UI:** Streamlit  
+- **Backend/DB:** MySQL 8+  
+- **Data Source:** Synthetic (Faker)  
+- **Python Libraries:** `pandas`, `streamlit`, `mysql-connector-python`, `faker`
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 movie_rental_dashboard/
 │
 ├── app/
-│   ├── dashboard.py           # Streamlit app
-│   ├── db_connection.py       # MySQL connector
-│   ├── queries.py             # Reusable SQL templates
-│   └── test_connection.py     # Optional connection test
+│   ├── dashboard.py           # Main Streamlit app
+│   ├── db_connection.py       # MySQL connector logic
+│   ├── queries.py             # SQL templates for reuse
+│   └── test_connection.py     # (Optional) test script
 │
 ├── data/
 │   ├── customers.csv
@@ -71,28 +64,28 @@ movie_rental_dashboard/
 
 ## 💻 Local Setup
 
-### 1. Clone this repo
+### 1. Clone the repo
 
 ```bash
-git clone https://github.com/yourusername/movie-rental-dashboard.git
-cd movie-rental-dashboard
+git clone https://github.com/codebylexis/movie_rental_dashboard.git
+cd movie_rental_dashboard
 ```
 
-### 2. Create a virtual environment
+### 2. Set up a virtual environment
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Create database in MySQL
+### 3. Create a MySQL database
 
 ```sql
 CREATE DATABASE rental_2024;
 ```
 
-### 4. Generate and load data
+### 4. Generate and load fake data
 
 ```bash
 python generate_fake_movie_data.py
@@ -106,21 +99,19 @@ streamlit run app/dashboard.py
 
 ---
 
-## ☁️ Deploy to Streamlit Cloud
+## ☁️ Deploying to Streamlit Cloud
 
-1. Push your code to GitHub
-2. Go to: https://streamlit.io/cloud
-3. Click **"New app"**
-4. Choose your repo + branch
-5. Set **Main file path** to: `app/dashboard.py`
+1. Push to GitHub  
+2. Go to [streamlit.io/cloud](https://streamlit.io/cloud)  
+3. Click **"New app"**  
+4. Choose your repo and branch  
+5. Set main file path: `app/dashboard.py`  
 6. Click **Deploy** 🎉
 
 ---
 
 ## 📬 Contact
 
-Made with ❤️ by **[Lexi Sierfeld]**  
-📫 [sierfeld@sas.upenn.edu]  
-🌐 [lexisierfeld.dev]
-
----
+Made with ❤️ by **Lexi Sierfeld**  
+📫 sierfeld@sas.upenn.edu  
+🌐 [https://lexisierfeld.dev](https://lexisierfeld.dev)
