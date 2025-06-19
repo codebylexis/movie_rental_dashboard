@@ -1,6 +1,6 @@
 import streamlit as st
-from app.db_connection import run_query
-from app.queries import (
+from db_connection import run_query
+from queries import (
     REVENUE_BY_MONTH,
     TOP_CUSTOMERS,
     POPULAR_GENRES,
@@ -33,32 +33,33 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 # --- 📊 Overview Tab ---
 with tab1:
     st.markdown("### 💡 Summary of Core Business KPIs")
-    with st.container():
-        revenue_query = f"""
-        SELECT ROUND(SUM(amount), 2) AS total_revenue
-        FROM payments
-        JOIN customers USING(customer_id)
-        {where_clause}
-        """
-        revenue = run_query(revenue_query)['total_revenue'].iloc[0]
-        st.metric("💰 Total Revenue", f"${revenue:,.2f}" if pd.notna(revenue) else "$0.00")
+    col1, col2, col3 = st.columns(3)
 
-        rentals = run_query(f"""
-        SELECT COUNT(*) AS total_rentals
-        FROM rentals
-        JOIN customers USING(customer_id)
-        {where_clause}
-        """)['total_rentals'].iloc[0]
-        st.metric("🎬 Total Rentals", f"{rentals:,}" if pd.notna(rentals) else "0")
+    revenue_query = f"""
+    SELECT ROUND(SUM(amount), 2) AS total_revenue
+    FROM payments
+    JOIN customers USING(customer_id)
+    {where_clause}
+    """
+    revenue = run_query(revenue_query)['total_revenue'].iloc[0]
+    col1.metric("💰 Total Revenue", f"${revenue:,.2f}" if pd.notna(revenue) else "$0.00")
 
-        customers_query = f"""
-        SELECT COUNT(*) AS total_customers
-        FROM customers
-        {where_clause}
-        AND active = 1
-        """ if where_clause else "SELECT COUNT(*) AS total_customers FROM customers WHERE active = 1"
-        customers = run_query(customers_query)['total_customers'].iloc[0]
-        st.metric("👥 Active Customers", f"{customers:,}" if pd.notna(customers) else "0")
+    rentals = run_query(f"""
+    SELECT COUNT(*) AS total_rentals
+    FROM rentals
+    JOIN customers USING(customer_id)
+    {where_clause}
+    """)['total_rentals'].iloc[0]
+    col2.metric("🎬 Total Rentals", f"{rentals:,}" if pd.notna(rentals) else "0")
+
+    customers_query = f"""
+    SELECT COUNT(*) AS total_customers
+    FROM customers
+    {where_clause}
+    AND active = 1
+    """ if where_clause else "SELECT COUNT(*) AS total_customers FROM customers WHERE active = 1"
+    customers = run_query(customers_query)['total_customers'].iloc[0]
+    col3.metric("👥 Active Customers", f"{customers:,}" if pd.notna(customers) else "0")
 
 # --- 📈 Revenue Tab ---
 with tab2:
