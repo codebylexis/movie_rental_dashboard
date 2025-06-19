@@ -95,10 +95,11 @@ with tab3:
 
     st.markdown("### 🏪 Customers by Store")
     cust_by_store = run_query("""
-        SELECT store_id, COUNT(*) AS customer_count
+        SELECT CAST(store_id AS INTEGER) AS store_id, COUNT(*) AS customer_count
         FROM customers
-        WHERE active IS TRUE
+        WHERE active = 1
         GROUP BY store_id
+        ORDER BY store_id;
     """)
     st.bar_chart(cust_by_store.set_index('store_id'))
 
