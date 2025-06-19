@@ -164,4 +164,4 @@ with tab5:
 
 # --- Footer ---
 st.markdown("---")
-st.caption("Built by Lexi Sierfeld · Powered by PostgreSQL, Python, and Streamlit · © 2025")
+st.caption("Built by Lexi Sierfeld · Powered by PostgreSQl, Python, and Streamlit · © 2025")
