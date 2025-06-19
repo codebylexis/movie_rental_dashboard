@@ -7,8 +7,9 @@ from queries import (
 )
 import pandas as pd
 
-st.set_page_config(page_title="Movie Rental Dashboard", layout="wide")
-st.title("🎬 Movie Rental Analytics Dashboard")
+st.set_page_config(page_title="ReelTime Rentals Dashboard · 2024", layout="wide")
+st.title("🎬 ReelTime Rentals – Analytics Dashboard (2024)")
+st.markdown("A business performance dashboard for the fictional movie rental company **ReelTime Rentals**.")
 
 # --- 🔧 Top Filter ---
 store_filter = st.selectbox("🏬 Filter by Store", ["All", "Store 1", "Store 2"])
@@ -165,4 +166,4 @@ with tab5:
 
 # --- Footer ---
 st.markdown("---")
-st.caption("Built by Lexi Sierfeld · Powered by PostgreSQL, Python, and Streamlit · © 2025")
+st.caption("Built by Lexi Sierfeld · ReelTime Rentals · 2024 · Powered by PostgreSQL, Python & Streamlit")
