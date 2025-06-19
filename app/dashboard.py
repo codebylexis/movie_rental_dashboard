@@ -97,11 +97,13 @@ with tab3:
 
     st.markdown("### 🏪 Customers by Store")
     cust_by_store = run_query("""
-    SELECT store_id, COUNT(*) AS customer_count
-    FROM customers
-    WHERE active = TRUE
-    GROUP BY store_id
-    """)
+SELECT s.store_id, COUNT(*) AS customer_count
+FROM customers c
+JOIN staff s ON c.store_id = s.store_id
+WHERE c.active = 1
+GROUP BY s.store_id
+""")
+
     st.bar_chart(cust_by_store.set_index('store_id'))
 
 # --- 🎬 Genres Tab ---
