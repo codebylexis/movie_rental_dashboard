@@ -11,3 +11,7 @@ __pycache__/
 
 # Jupyter checkpoints (if ever used)
 .ipynb_checkpoints/
+
+.devcontainer/
+
+
