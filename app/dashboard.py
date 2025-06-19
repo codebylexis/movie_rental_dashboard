@@ -36,7 +36,7 @@ with tab1:
     col1, col2, col3 = st.columns(3)
 
     revenue_query = f"""
-    SELECT ROUND(SUM(amount), 2) AS total_revenue
+    SELECT ROUND(SUM(amount)::numeric, 2) AS total_revenue
     FROM payments
     JOIN customers USING(customer_id)
     {where_clause}
@@ -122,7 +122,7 @@ with tab5:
 
     st.subheader("🏙️ Revenue by Store")
     store_rev_df = run_query("""
-    SELECT s.store_id, ROUND(SUM(p.amount), 2) AS revenue
+    SELECT s.store_id, ROUND(SUM(p.amount)::numeric, 2) AS revenue
     FROM payments p
     JOIN customers c ON p.customer_id = c.customer_id
     JOIN stores s ON c.store_id = s.store_id
@@ -143,7 +143,7 @@ with tab5:
 
     st.subheader("⏳ Average Rental Duration")
     avg_duration = run_query("""
-    SELECT AVG(DATEDIFF(return_date, rental_date)) AS avg_days
+    SELECT AVG(return_date - rental_date) AS avg_days
     FROM rentals
     WHERE return_date IS NOT NULL
     """)['avg_days'].iloc[0]
@@ -151,7 +151,7 @@ with tab5:
 
     st.subheader("🕓 Rentals by Hour")
     hour_df = run_query("""
-    SELECT HOUR(rental_date) AS hour, COUNT(*) AS rentals
+    SELECT EXTRACT(HOUR FROM rental_date) AS hour, COUNT(*) AS rentals
     FROM rentals
     GROUP BY hour
     ORDER BY hour
@@ -164,4 +164,4 @@ with tab5:
 
 # --- Footer ---
 st.markdown("---")
-st.caption("Built by Lexi Sierfeld · Powered by MySQL, Python, and Streamlit · © 2025")
+st.caption("Built by Lexi Sierfeld · Powered by PostgreSQL, Python, and Streamlit · © 2025")
