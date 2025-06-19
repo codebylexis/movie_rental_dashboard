@@ -49,9 +49,9 @@ with tab1:
     col2.metric("🎬 Total Rentals", f"{rentals:,}" if pd.notna(rentals) else "0")
 
     customers_total = run_query(f"""
-    SELECT COUNT(*) AS total_customers
-    FROM customers
-    {'WHERE ' + where_clause[6:] + ' AND' if where_clause else 'WHERE'} active = 1
+        SELECT COUNT(*) AS total_customers
+        FROM customers
+        {'WHERE ' + where_clause[6:] + ' AND' if where_clause else 'WHERE'} active = 1
     """)['total_customers'].iloc[0]
     col3.metric("👥 Active Customers", f"{customers_total:,}")
 
@@ -95,7 +95,7 @@ with tab3:
 
     st.markdown("### 🏪 Customers by Store")
     cust_by_store = run_query("""
-        SELECT CAST(store_id AS INTEGER) AS store_id, COUNT(*) AS customer_count
+        SELECT store_id, COUNT(*) AS customer_count
         FROM customers
         WHERE active = 1
         GROUP BY store_id
@@ -141,22 +141,19 @@ with tab5:
 
     st.subheader("⏳ Average Rental Duration")
     avg_duration = run_query("""
-SELECT ROUND(
-    AVG(EXTRACT(EPOCH FROM (
-        return_date::timestamp - rental_date::timestamp
-    )) / 86400.0), 2
-) AS avg_days
-FROM rentals
-WHERE return_date IS NOT NULL AND rental_date IS NOT NULL;
-""")['avg_days'].iloc[0]
-
-
+        SELECT ROUND(
+            AVG(EXTRACT(EPOCH FROM (return_date - rental_date)) / 86400.0), 2
+        ) AS avg_days
+        FROM rentals
+        WHERE return_date IS NOT NULL AND rental_date IS NOT NULL
+    """)['avg_days'].iloc[0]
     st.metric("⏳ Avg Duration", f"{avg_duration:.2f} days")
 
     st.subheader("🕓 Rentals by Hour")
     hour_df = run_query("""
         SELECT EXTRACT(HOUR FROM rental_date) AS hour, COUNT(*) AS rentals
         FROM rentals
+        WHERE rental_date IS NOT NULL
         GROUP BY hour
         ORDER BY hour
     """)
