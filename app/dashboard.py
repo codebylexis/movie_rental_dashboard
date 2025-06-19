@@ -49,10 +49,9 @@ with tab1:
     col2.metric("🎬 Total Rentals", f"{rentals:,}" if pd.notna(rentals) else "0")
 
     customers_total = run_query(f"""
-        SELECT COUNT(*) AS total_customers
-        FROM customers
-        {where_clause if where_clause else 'WHERE TRUE'}  -- keep same filter logic
-        AND active IS TRUE
+    SELECT COUNT(*) AS total_customers
+    FROM customers
+    {'WHERE ' + where_clause[6:] + ' AND' if where_clause else 'WHERE'} active = 1
     """)['total_customers'].iloc[0]
     col3.metric("👥 Active Customers", f"{customers_total:,}")
 
