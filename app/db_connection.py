@@ -1,17 +1,15 @@
-import mysql.connector
+# db_connection.py (PostgreSQL version)
+
 import pandas as pd
+from sqlalchemy import create_engine
+import os
 
 def get_connection():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Zosia0920",  # Replace this with your actual password
-        database="rental_2024",
-        allow_local_infile=True
+    return create_engine(
+        f"postgresql+psycopg2://{os.environ['PGUSER']}:{os.environ['PGPASSWORD']}@{os.environ['PGHOST']}/{os.environ['PGDATABASE']}"
     )
 
 def run_query(query):
-    conn = get_connection()
-    df = pd.read_sql(query, conn)
-    conn.close()
-    return df
+    engine = get_connection()
+    with engine.connect() as conn:
+        return pd.read_sql(query, conn)
